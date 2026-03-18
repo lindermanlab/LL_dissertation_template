@@ -1,0 +1,278 @@
+
+
+
+% ****************************************************************************************************
+% 0. Set the encoding of your files. UTF-8 is the only sensible encoding nowadays. If you can't read
+% äöüßáéçèê∂åëæƒÏ€ then change the encoding setting in your editor, not the line below. If your editor
+% does not support utf8 use another editor!
+% ****************************************************************************************************
+\PassOptionsToPackage{utf8}{inputenc}
+	\usepackage{inputenc}
+
+\PassOptionsToPackage{eulerchapternumbers,listings,%
+					 pdfspacing,%floatperchapter,%linedheaders,%
+					 subfig,beramono,eulermath,parts}{thesis}
+% 2. Personal data and user ad-hoc commands
+% ****************************************************************************************************
+% TODO: Fill in your personal information below
+\newcommand{\myTitle}{Your Dissertation Title\xspace}
+\newcommand{\myName}{Your Name\xspace}
+\newcommand{\myUni}{Stanford University\xspace}
+
+% ********************************************************************
+% Setup, finetuning, and useful commands
+% ********************************************************************
+\newcounter{dummy} % necessary for correct hyperlinks (to index, bib, etc.)
+\newlength{\abcd} % for ab..z string length calculation
+\providecommand{\mLyX}{L\kern-.1667em\lower.25em\hbox{Y}\kern-.125emX\@}
+\newcommand{\ie}{i.\,e.}
+\newcommand{\Ie}{I.\,e.}
+\newcommand{\eg}{e.\,g.}
+\newcommand{\Eg}{E.\,g.} 
+% ****************************************************************************************************
+
+
+% ****************************************************************************************************
+% 3. Loading some handy packages
+% ****************************************************************************************************
+% ******************************************************************** 
+% Packages with options that might require adjustments
+% ******************************************************************** 
+%\PassOptionsToPackage{ngerman,american}{babel}   % change this to your language(s)
+% Spanish languages need extra options in order to work with this template
+%\PassOptionsToPackage{spanish,es-lcroman}{babel}
+	\usepackage{babel}
+
+\usepackage[threshold=0]{csquotes}  % threshold=0 ensures blockquote always displays as block
+
+% Load cleveref AFTER babel so it picks up the correct language (American English)
+\usepackage{cleveref}
+% Explicitly set all cleveref names to American English
+\crefname{chapter}{chapter}{chapters}
+\Crefname{chapter}{Chapter}{Chapters}
+\crefname{section}{section}{sections}
+\Crefname{section}{Section}{Sections}
+\crefname{subsection}{subsection}{subsections}
+\Crefname{subsection}{Subsection}{Subsections}
+\crefname{figure}{figure}{figures}
+\Crefname{figure}{Figure}{Figures}
+\crefname{table}{table}{tables}
+\Crefname{table}{Table}{Tables}
+\crefname{equation}{equation}{equations}
+\Crefname{equation}{Equation}{Equations}
+\crefname{theorem}{theorem}{theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+\crefname{lemma}{lemma}{lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{proposition}{proposition}{propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{corollary}{corollary}{corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefname{definition}{definition}{definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefname{appendix}{appendix}{appendices}
+\Crefname{appendix}{Appendix}{Appendices}
+\crefname{part}{part}{parts}
+\Crefname{part}{Part}{Parts}
+\PassOptionsToPackage{%
+    backend=biber,       % <--- UNCOMMENT THIS (Modern engine)
+    % backend=bibtex8,bibencoding=ascii, % <--- COMMENT THIS OUT (Old engine)
+    language=auto,%
+    style=numeric-comp,%
+    sorting=nyt, 
+    maxbibnames=10, 
+    natbib=true 
+}{biblatex}
+\usepackage{biblatex}
+\PassOptionsToPackage{fleqn}{amsmath}       % math environments and more by the AMS
+    \usepackage{amsmath}
+\usepackage{amsthm}  % theorem environments
+\usepackage{amssymb} % additional math symbols
+
+% Theorem environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem*{theorem*}{Theorem} 
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\usepackage{aliascnt} % Make sure this is in your preamble
+
+% 1. Create a "ghost" counter named 'example' that copies 'theorem'
+\newaliascnt{example}{theorem}
+\newaliascnt{proposition}{theorem}
+
+% 2. Define the environment using this NEW ghost counter
+\newtheorem{example}[example]{Example}
+\newtheorem{proposition}[proposition]{Proposition}
+
+% 3. Make the formatting match (so it prints "1.2" instead of just "2")
+\aliascntresetthe{example}
+\aliascntresetthe{proposition}
+\newaliascnt{definition}{theorem}
+\theoremstyle{definition}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+\crefname{definition}{definition}{definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefname{proposition}{proposition}{propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{example}{example}{examples}
+\Crefname{example}{Example}{Examples}
+\crefname{appendix}{appendix}{appendices}
+\Crefname{appendix}{Appendix}{Appendices}
+
+\newaliascnt{remark}{theorem}
+\theoremstyle{remark}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+\crefname{remark}{remark}{remarks}
+\Crefname{remark}{Remark}{Remarks}
+
+% ********************************************************************
+% General useful packages
+% ********************************************************************
+\PassOptionsToPackage{T1}{fontenc} % T2A for cyrillics
+    \usepackage{fontenc}
+\usepackage{textcomp} % fix warning with missing font shapes
+
+% Stanford formatting: Times New Roman font and 1.5 line spacing
+\usepackage{mathptmx}  % Times New Roman for text and math (Stanford approved)
+\usepackage{setspace}  % Line spacing control
+\onehalfspacing        % Stanford requires 1.5 or double spacing
+\usepackage{scrhack} % fix warnings when using KOMA with listings package          
+\usepackage{xspace} % to get the spacing after macros right  
+\usepackage{mparhack} % get marginpar right
+% \usepackage{fixltx2e} % fixes some LaTeX stuff --> since 2015 in the LaTeX kernel (see below)
+\PassOptionsToPackage{printonlyused,smaller}{acronym} 
+    \usepackage{acronym} % nice macros for handling all acronyms in the thesis
+    %\renewcommand{\bflabel}[1]{{#1}\hfill} % fix the list of acronyms --> no longer working
+    %\renewcommand*{\acsfont}[1]{\textsc{#1}} 
+    \renewcommand*{\aclabelfont}[1]{\acsfont{#1}}
+% ****************************************************************************************************
+
+
+% ****************************************************************************************************
+% 4. Setup floats: tables, (sub)figures, and captions
+% ****************************************************************************************************
+\usepackage{tabularx} % better tables
+    \setlength{\extrarowheight}{3pt} % increase table row height
+\newcommand{\tableheadline}[1]{\multicolumn{1}{c}{\spacedlowsmallcaps{#1}}}
+\newcommand{\myfloatalign}{\centering} % to be used with each float for alignment
+\usepackage{caption}
+\captionsetup{font=small} % format=hang,
+\usepackage{subfig}  
+% ****************************************************************************************************
+
+
+% ****************************************************************************************************
+% 5. Setup code listings
+% ****************************************************************************************************
+\usepackage{listings} 
+%\lstset{emph={trueIndex,root},emphstyle=\color{BlueViolet}}%\underbar} % for special keywords
+\lstset{language=[LaTeX]Tex,%C++,
+    morekeywords={PassOptionsToPackage,selectlanguage},
+    keywordstyle=\color{RoyalBlue},%\bfseries,
+    basicstyle=\small\ttfamily,
+    %identifierstyle=\color{NavyBlue},
+    commentstyle=\color{Green}\ttfamily,
+    stringstyle=\rmfamily,
+    numbers=none,%left,%
+    numberstyle=\scriptsize,%\tiny
+    stepnumber=5,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    %frameround=ftff,
+    %frame=single,
+    belowcaptionskip=.75\baselineskip
+    %frame=L
+} 
+% ****************************************************************************************************             
+
+
+% ****************************************************************************************************
+% 6. PDFLaTeX, hyperreferences and citation backreferences
+% ****************************************************************************************************
+% ********************************************************************
+% Using PDFLaTeX
+% ********************************************************************
+\PassOptionsToPackage{pdftex,hyperfootnotes=false,pdfpagelabels}{hyperref}
+    \usepackage{hyperref}  % backref linktocpage pagebackref
+\pdfcompresslevel=9
+\pdfadjustspacing=1 
+\PassOptionsToPackage{pdftex}{graphicx}
+    \usepackage{graphicx} 
+ 
+
+% ********************************************************************
+% Hyperreferences
+% ********************************************************************
+\hypersetup{%
+    %draft, % = no hyperlinking at all (useful in b/w printouts)
+    colorlinks=true, linktocpage=true, pdfstartpage=3, pdfstartview=FitV,%
+    % uncomment the following line if you want to have black links (e.g., for printing)
+    %colorlinks=false, linktocpage=false, pdfstartpage=3, pdfstartview=FitV, pdfborder={0 0 0},%
+    breaklinks=true, pdfpagemode=UseNone, pageanchor=true, pdfpagemode=UseOutlines,%
+    plainpages=false, bookmarksnumbered, bookmarksopen=true, bookmarksopenlevel=1,%
+    hypertexnames=true, pdfhighlight=/O,%nesting=true,%frenchlinks,%
+    urlcolor=webbrown, linkcolor=RoyalBlue, citecolor=webgreen, %pagecolor=RoyalBlue,%
+    %urlcolor=Black, linkcolor=Black, citecolor=Black, %pagecolor=Black,%
+    pdftitle={\myTitle},%
+    pdfauthor={\textcopyright\ \myName, \myUni},%
+    pdfsubject={},%
+    pdfkeywords={},%
+    pdfcreator={pdfLaTeX},%
+    pdfproducer={LaTeX}%
+}   
+
+
+\makeatletter
+\@ifpackageloaded{babel}%
+    {%
+       \addto\extrasamerican{%
+			\renewcommand*{\figureautorefname}{Figure}%
+			\renewcommand*{\tableautorefname}{Table}%
+			\renewcommand*{\partautorefname}{Part}%
+			\renewcommand*{\chapterautorefname}{Chapter}%
+			\renewcommand*{\sectionautorefname}{Section}%
+			\renewcommand*{\subsectionautorefname}{Section}%
+			\renewcommand*{\subsubsectionautorefname}{Section}%     
+                }%
+       \addto\extrasngerman{% 
+			\renewcommand*{\paragraphautorefname}{Absatz}%
+			\renewcommand*{\subparagraphautorefname}{Unterabsatz}%
+			\renewcommand*{\footnoteautorefname}{Fu\"snote}%
+			\renewcommand*{\FancyVerbLineautorefname}{Zeile}%
+			\renewcommand*{\theoremautorefname}{Theorem}%
+			\renewcommand*{\appendixautorefname}{Anhang}%
+			\renewcommand*{\equationautorefname}{Gleichung}%        
+			\renewcommand*{\itemautorefname}{Punkt}%
+                }%  
+            % Fix to getting autorefs for subfigures right (thanks to Belinda Vogt for changing the definition)
+            \providecommand{\subfigureautorefname}{\figureautorefname}%             
+    }{\relax}
+\makeatother
+
+% ********************************************************************
+% Development Stuff
+% ********************************************************************
+\listfiles
+%\PassOptionsToPackage{l2tabu,orthodox,abort}{nag}
+%   \usepackage{nag}
+%\PassOptionsToPackage{warning, all}{onlyamsmath}
+%   \usepackage{onlyamsmath}
+
+\usepackage{thesis}
+% ****************************************************************************************************
+
+
+% ****************************************************************************************************
+% 8. Further adjustments (experimental)
+% ****************************************************************************************************
+% ********************************************************************
+% Changing the text area
+% ********************************************************************
+% Stanford requires: 1.5" inner (left for single-sided), 1" all other margins
+\geometry{left=1.5in,right=1in,top=1in,bottom=1in,headheight=15.3pt,headsep=0.3in,footskip=0.5in}
+

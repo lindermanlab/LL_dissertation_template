@@ -1,0 +1,153 @@
+
+\RequirePackage{fix-cm} % fix some latex issues see: http://texdoc.net/texmf-dist/doc/latex/base/fixltx2e.pdf
+\documentclass[ oneside,titlepage,numbers=noenddot,headinclude,%1headlines,
+                footinclude=true,abstract=false,
+                BCOR=0mm,paper=letter,fontsize=12pt,% Stanford: US letter, 10-12pt
+                american,%
+                ]{scrreprt}
+
+% Silence common KOMA-Script warnings about titlesec/tocloft compatibility
+\usepackage{silence}
+\WarningFilter{scrreprt}{Usage of package `titlesec'}
+\WarningFilter{scrreprt}{Usage of package `tocloft'}
+\WarningFilter{scrreprt}{Activating an pointless option}
+\WarningFilter{scrreprt}{Redefinition of}
+\WarningFilter{titlesec}{Non standard}
+
+% Stanford margins: 1.5 inch left (binding edge), 1 inch on all other sides
+% https://studentservices.stanford.edu/my-academics/earn-my-degree/graduate-degree-progress/dissertations-and-theses/prepare-your-work-0
+% Using oneside layout for consistent margins on every page
+\usepackage[left=1.5in,right=1in,top=1in,bottom=1in,headheight=15.3pt,headsep=0.5in,footskip=0.5in]{geometry}
+% Load xcolor with dvipsnames BEFORE hyperref/tikz (which load xcolor as dependency)
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning, arrows.meta}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{nicefrac}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{mathtools}
+\usepackage{wrapfig}
+\usepackage{appendix}
+\usepackage{mdframed} % for boxed environments
+\usepackage{makecell}
+\usepackage{booktabs}
+\usepackage{enumitem} % for description list formatting
+
+% for algorithm blocks
+\usepackage{algorithm}
+\usepackage{algorithmicx,tikz}
+\usepackage{algcompatible}
+\usepackage[noend]{algpseudocode}
+
+% Create a new column type 'Y' that is an 'X' column in math mode
+\newcolumntype{Y}{>{\centering\arraybackslash$}X<{$}}
+
+
+%********************************************************************
+% Note: Make all your adjustments in here
+%*******************************************************
+\input{thesis-config}
+
+% Marks TODO items in red bold
+\newcommand{\fix}[1]{\textcolor{red}{\textbf{\large (#1)\normalsize}}}
+
+% Common math shortcuts (add your own as needed)
+\newcommand{\E}{\mathbb{E}}
+\renewcommand{\b}[1]{\mathbf{#1}}
+
+%********************************************************************
+% Bibliographies
+%*******************************************************
+\addbibresource{Bibliography.bib}
+
+%********************************************************************
+% Hyphenation
+%*******************************************************
+%\hyphenation{put special hyphenation here}
+
+\begin{document}
+\frenchspacing
+\raggedbottom
+\selectlanguage{american} % american ngerman
+%\renewcommand*{\bibname}{new name}
+%\setbibpreamble{}
+
+%********************************************************************
+% Frontmatter - Stanford Format
+% Title page counts as "i" but is unnumbered
+% Copyright (ii) and Signature (iii) pages are auto-inserted by Stanford
+% Numbering starts at iv with Abstract
+%*******************************************************
+\pagestyle{empty}
+\include{FrontBackmatter/Titlepage}
+
+% Start Roman numeral page numbering at iv (after auto-inserted copyright & signature)
+\pagenumbering{roman}
+\setcounter{page}{4}
+\pagestyle{plain}
+
+% Stanford order: Abstract, then optional preface/acknowledgments/dedication
+\include{FrontBackmatter/Abstract}
+\clearpage\include{FrontBackmatter/Acknowledgments}
+\clearpage\include{FrontBackmatter/Contents}
+%********************************************************************
+% Mainmatter
+%*******************************************************
+\clearpage\pagenumbering{arabic}
+\pagestyle{scrheadings}
+% use \clearpage here to avoid problems with pdfbookmark
+\clearpage
+
+% TODO: Organize your dissertation into parts and chapters.
+%       You can use \part{} to group related chapters, or remove parts entirely.
+%       Add \ctparttext{...} before a \part{} to include a brief description.
+%
+% Example with parts:
+%   \part{Introduction and Background}
+%   \include{Chapters/Chapter01}
+%   \include{Chapters/Chapter02}
+%   \part{Methods}
+%   \include{Chapters/Chapter03}
+%   \part{Conclusion}
+%   \include{Chapters/ChapterConclusion}
+%
+% Example without parts:
+%   \include{Chapters/Chapter01}
+%   \include{Chapters/Chapter02}
+
+\part{Introduction and Background}
+\include{Chapters/Ch01}
+\include{Chapters/Ch02}
+
+\part{Main Body}
+\include{Chapters/Ch03}
+\include{Chapters/Ch04}
+\include{Chapters/Ch05}
+
+\part{Conclusion}
+
+\include{Chapters/Ch06}
+
+% ********************************************************************
+% Backmatter
+%*******************************************************
+% Uncomment the following to add appendices:
+% \begin{appendices}
+% \crefalias{chapter}{appendix}
+% \clearpage
+% \part{Appendix}
+% \include{Chapters/AppendixA}
+% \end{appendices}
+
+%********************************************************************
+% Other Stuff in the Back
+%*******************************************************
+\clearpage\include{FrontBackmatter/Bibliography}
+
+\end{document}
+% ********************************************************************
